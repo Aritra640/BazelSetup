@@ -1,0 +1,27 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "rules_go",
+    sha256 = "3f1492df5d1b...",
+    urls = ["https://github.com/bazelbuild/rules_go/releases/download/v0.39.0/rules_go-v0.39.0.tar.gz"],
+)
+
+load("@rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
+go_rules_dependencies()
+go_register_toolchains()
+
+http_archive(
+    name = "rules_nodejs",
+    sha256 = "e4a3a...",
+    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/v5.3.0/rules_nodejs-v5.3.0.tar.gz"],
+)
+
+load("@rules_nodejs//nodejs:repositories.bzl", "nodejs_register_toolchains", "npm_install")
+
+nodejs_register_toolchains()
+npm_install(
+    name = "npm",
+    package_json = "//frontend:package.json",
+    package_lock_json = "//frontend:package-lock.json",
+)
+
